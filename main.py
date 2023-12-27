@@ -2,29 +2,27 @@ import pandas as pd
 
 
 def bar_race(data):
-    grouped_df = df.groupby('Year').agg(
+    grouped_df = data.groupby('Year').agg(
         {'North America': 'sum', 'Europe': 'sum', 'Japan': 'sum', 'Rest of World': 'sum'}).reset_index()
     grouped_df.columns = ['Year', 'North America', 'Europe', 'Japan', 'Rest of World']
     grouped_df[['North America', 'Europe', 'Japan', 'Rest of World']] = grouped_df[
         ['North America', 'Europe', 'Japan', 'Rest of World']].cumsum()
     transposed_df = grouped_df.transpose()
     transposed_df.to_csv('bar_race.csv', index=False, header=True)
-    print("calvo")
 
 
 def increase_2008_to_2012(data):
-    grouped_df = df.groupby('Year').agg(
+    grouped_df = data.groupby('Year').agg(
         {'North America': 'sum', 'Europe': 'sum', 'Japan': 'sum', 'Rest of World': 'sum',
          'Global': 'sum'}).reset_index()
     grouped_df.columns = ['Year', 'North America', 'Europe', 'Japan', 'Rest of World', 'Global']
-    no_cum_sum = df.groupby('Year').agg(
+    no_cum_sum = data.groupby('Year').agg(
         {'North America': 'sum', 'Europe': 'sum', 'Japan': 'sum', 'Rest of World': 'sum',
          'Global': 'sum'}).reset_index()
     no_cum_sum.columns = ['Year', 'North America', 'Europe', 'Japan', 'Rest of World', 'Global']
     grouped_df[['North America', 'Europe', 'Japan', 'Rest of World', 'Global']] = grouped_df[
         ['North America', 'Europe', 'Japan', 'Rest of World', 'Global']].cumsum()
     no_cum_sum.to_csv('grouped.csv', index=False, header=True)
-    print("calvo")
 
 
 def proportion_sales_units_by_year(data):
@@ -42,7 +40,6 @@ def average_sales_by_day(data):
     north_america_average_day_sales = data['North America'].sum() / 10957 * 1000000
     europe_average_day_sales = data['Europe'].sum() / 10957 * 1000000
     japan_average_day_sales = data['Japan'].sum() / 10957 * 1000000
-    print("calvo")
 
 
 def sales_per_genre(data):
@@ -102,13 +99,13 @@ if __name__ == '__main__':
     df = pd.read_csv(file_name)
     df = df.dropna(subset=['Year'])
     df['Year'] = df['Year'].astype(int)
-    # bar_race(df)
-    # increase_2008_to_2012(df)
-    # proportion_sales_units_by_year(df)
-    # average_sales_by_day(df)
-    # sales_per_genre(df)
-    # releases_by_year(df)
-    # releases_by_platform(df)
-    # releases_by_publisher(df)
-    # sales_per_platform(df)
+    bar_race(df)
+    increase_2008_to_2012(df)
+    proportion_sales_units_by_year(df)
+    average_sales_by_day(df)
+    sales_per_genre(df)
+    releases_by_year(df)
+    releases_by_platform(df)
+    releases_by_publisher(df)
+    sales_per_platform(df)
     sales_per_publisher(df)
